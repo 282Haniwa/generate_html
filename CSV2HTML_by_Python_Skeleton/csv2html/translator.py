@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import commands
+#import subprocess
 import datetime
 import locale
 import os
@@ -11,8 +12,8 @@ import shutil
 
 from PIL import Image
 
-from downloader import Downloader
-from io import IO
+from .downloader import Downloader
+from .io import IO
 from table import Table
 from tuple import Tuple
 from writer import Writer
