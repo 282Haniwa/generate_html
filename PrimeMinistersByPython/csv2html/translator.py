@@ -33,7 +33,7 @@ class Translator(object):
 
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
-
+		
 		return None
 
 	def compute_string_of_image(self, tuple):
