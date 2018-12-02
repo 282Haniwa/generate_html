@@ -24,18 +24,17 @@ class IO(object):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
 		with open('./PrimeMinisters.csv', 'r') as csvfile:
 			reader = csv.reader(csvfile, delimiter='', quotechar='|')
-			for row in reader:
-				print ','.join(row)
+		return reader
 		"""
-		多分ここでcsv内の情報が.を用いて表示されているはず...
+		間違えていなければでcsvを読み込めているはず...
 		TODO: Nobu(何か間違いがあればslackで)
 		"""
-		return None
+		return reader
 
 	@classmethod
 	def html_canonical_string(the_class, a_string):
 		"""指定された文字列をHTML内に記述できる正式な文字列に変換して応答する。"""
-
+		
 		return None
 
 	def table(self):
@@ -50,5 +49,12 @@ class IO(object):
 
 	def write_csv(self, filename, rows):
 		"""指定されたファイルにCSVとして行たち(rows)を書き出す。"""
+		reader = reat_csv(self, filename)
+		for row in reader:
+			print 'row'
 
+		"""
+		TODO:(Nobu)書き出すって、print...??
+				   
+		"""
 		return
