@@ -3,11 +3,11 @@
 Classes/
 *.class
 csv2html.jar
-CSV2HTML.app/Contents/Resources/Java/*
+PrimeMinistersByJava/CSV2HTML.app/Contents/Resources/Java/*
 
 __pycache__/
 *.pyc
-CSV2HTML.app/Contents/Resources/Python/*
+PrimeMinistersByPython/CSV2HTML.app/Contents/Resources/Python/*
 
 index.html
 *.zip
