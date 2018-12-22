@@ -43,6 +43,9 @@ class Downloader(IO):
 		if os.path.isdir("./thumbnails"):
 			shutil.rmtree("./thumbnails")
 		os.makedirs("./thumbnails")
+		'''
+		TODO: (Nobu)ここから不要？
+		'''
 		for num in range(39...62):
 			name = "./images/0{}.jpg".format(num)
 			url = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/images/0{}.jpg".format(num)
