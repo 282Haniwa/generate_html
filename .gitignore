@@ -1,0 +1,15 @@
+.DS_Store
+
+*.csv
+
+Classes/
+*.class
+csv2html.jar
+PrimeMinistersByJava/CSV2HTML.app/Contents/Resources/Java/*
+
+__pycache__/
+*.pyc
+PrimeMinistersByPython/CSV2HTML.app/Contents/Resources/Python/*
+
+index.html
+*.zip
