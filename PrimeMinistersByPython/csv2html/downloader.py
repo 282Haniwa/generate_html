@@ -21,7 +21,8 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
-		
+		PrimeMinisterURL = urllib.urlretrieve("http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/PrimeMinisters.csv")
+		TokugswaShogunateURL = urllib.urlretrieve("http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/TokugawaShogunate/TokugawaShogunate.csv")
 		return
 
 
