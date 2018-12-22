@@ -29,7 +29,7 @@ class IO(object):
 		間違えていなければでcsvを読み込めているはず...
 		TODO: Nobu(何か間違いがあればslackで)
 		"""
-		return reader
+		
 
 	@classmethod
 	def html_canonical_string(the_class, a_string):

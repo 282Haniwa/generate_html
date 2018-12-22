@@ -21,11 +21,22 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
-
+		
 		return
+
 
 	def download_images(self, image_filenames):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
+		photo_url = []
+		thumbnail_url = []
+		for num in range(39...62):
+			photo_url.append(
+				"http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/images/0{}.jpg".format(
+					num))
+		for num in range(39...62):
+			thumbnail_url.append(
+				"http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(
+					num))
 
 		return
 
