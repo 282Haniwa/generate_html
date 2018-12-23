@@ -29,11 +29,11 @@ class Downloader(IO):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
 		photo_url = []
 		thumbnail_url = []
-		for num in range(39...62):
+		for num in range(39,63):
 			photo_url.append(
 				"http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/images/0{}.jpg".format(
 					num))
-		for num in range(39...62):
+		for num in range(39,63):
 			thumbnail_url.append(
 				"http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(
 					num))
