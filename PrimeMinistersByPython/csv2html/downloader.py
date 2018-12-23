@@ -46,20 +46,17 @@ class Downloader(IO):
 		'''
 		TODO: (Nobu)ここから不要？
 		'''
-		for num in range(39...62):
+		for num in range(39,63):
 			name = "./images/0{}.jpg".format(num)
 			url = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/images/0{}.jpg".format(num)
 			urllib.request.urlretrieve(url, name)
 
-		for num in range(39...62):
+		for num in range(39,63):
 			name = "./thumbnails/0{}.jpg".format(num)
-			url = "http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(num))
+			url = "http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(num)
 			urllib.request.urlretrieve(url, name)
 
-		for num in range(39...62):
-			thumbnail_url.append(
-				"http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(
-					num))
+		
 
 		return
 
