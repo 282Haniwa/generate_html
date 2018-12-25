@@ -22,12 +22,14 @@ class IO(object):
 
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
-		with open('./PrimeMinisters.csv', 'r') as csvfile:
-			reader = csv.reader(csvfile, delimiter='', quotechar='|')
-		return reader
+		with open(filename, 'r') as data:
+			read = csv.reader(data)
+			return_list = [row for row in read]
+		return return_list
 		"""
-		間違えていなければでcsvを読み込めているはず...
-		TODO: Nobu(何か間違いがあればslackで)
+		TODO: Nobu
+		[[---,---,---,...],[---,---,---,...],・・・[---,---,---,...]]
+		この形のリストを想定しています。
 		"""
 		
 
@@ -50,11 +52,8 @@ class IO(object):
 	def write_csv(self, filename, rows):
 		"""指定されたファイルにCSVとして行たち(rows)を書き出す。"""
 		reader = reat_csv(self, filename)
+		'''
 		for row in reader:
 			print 'row'
-
-		"""
-		TODO:(Nobu)書き出すって、print...??
-				   
-		"""
+		'''
 		return

@@ -4,7 +4,7 @@
 import os
 import shutil
 import urllib
-import .attributes
+import .attributes as attributes
 
 from io import IO
 from reader import Reader
@@ -23,19 +23,18 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
-		
-		PrimeMinistersURL = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/PrimeMinisters.csv"
-		TokugawaShogunateURL = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/TokugawaShogunate/TokugawaShogunate.csv"
-		PrimeMinistersCSV = "PrimeMinisters.csv"
-		TokugawaShogunateCSV = "TokugawaShogunate.csv"
-		urllib.request.urlretrieve(PrimeMinistersURL, PrimeMinistersCSV)
-		urllib.request.urlretrieve(TokugawaShogunateURL, TokugawaShogunateCSV)
+		self.PrimeMinisterCSV = "{}".format(attributes.AttributesForPrimeMinisters.csv_url())
+		self.TokugawaShogunateCSV = "{}".format(attributes.AttributesForTokugawaShogunate.csv_url())
 		return
-		
-		
+
 
 	def download_images(self, image_filenames):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
+
+		'''
+		TODO:(NOBU) PrimeMinisterとTokugawaShogunateファイルの二つが必要??
+		'''
+
 		if os.path.isdir("./images"):
 			shutil.rmtree("./images")
 		os.makedirs("./images")
@@ -43,18 +42,13 @@ class Downloader(IO):
 		if os.path.isdir("./thumbnails"):
 			shutil.rmtree("./thumbnails")
 		os.makedirs("./thumbnails")
-		'''
-		TODO: (Nobu)ここから不要？
-		'''
-		for num in range(39,63):
-			name = "./images/0{}.jpg".format(num)
-			url = "http://www.cc.kyoto-su.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/images/0{}.jpg".format(num)
-			urllib.request.urlretrieve(url, name)
 
-		for num in range(39,63):
-			name = "./thumbnails/0{}.jpg".format(num)
-			url = "http://www.cc.kyoto-sy.ac.jp/~atsushi/Programs/VisualWorks/CSV2HTML/PrimeMinisters/thumbnails/0{}.jpg".format(num)
-			urllib.request.urlretrieve(url, name)
+		for num, image_filename enumerate(image_filenames,39):
+			name = "./images/{:01}_{}.jpg".format(num)
+			image_url = '{}/{}'.format(image_filenames, name)
+			urllib.request.urlretrieve(image_url, name)
+
+
 
 		
 
@@ -62,7 +56,8 @@ class Downloader(IO):
 
 	def perform(self):
 		"""すべて（情報を記したCSVファイル・画像ファイル群・縮小画像ファイル群）をダウンロードする。"""
+		image_filenames = reader.perform()
 		self.download_csv()
-		self.download_images('~Desktop/PrimeMinisters/images')
+		self.download_images()
 
 		return

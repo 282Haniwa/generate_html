@@ -28,7 +28,7 @@ class Tuple(object):
 
 	def attributes(self):
 		"""属性リストを応答する。"""
-
+		
 		return self._attributes
 
 	def values(self):
