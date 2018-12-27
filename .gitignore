@@ -13,3 +13,5 @@ PrimeMinistersByPython/CSV2HTML.app/Contents/Resources/Python/*
 
 index.html
 *.zip
+
+.idea
