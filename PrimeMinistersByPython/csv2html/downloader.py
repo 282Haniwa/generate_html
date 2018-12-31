@@ -32,7 +32,7 @@ class Downloader(IO):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
 
 		'''
-		TODO:(NOBU) PrimeMinisterとTokugawaShogunateファイルの二つが必要??
+		TODO: まだ総理大臣だけしか書いてないけどこれでいけるかな？
 		'''
 
 		if os.path.isdir("./images"):
@@ -43,10 +43,10 @@ class Downloader(IO):
 			shutil.rmtree("./thumbnails")
 		os.makedirs("./thumbnails")
 
-		for num, image_filename enumerate(image_filenames,39):
-			name = "./images/{:01}_{}.jpg".format(num)
-			image_url = '{}/{}'.format(image_filenames, name)
-			urllib.request.urlretrieve(image_url, name)
+		for image_filename in image_filenames:
+			photo_name = image_filenames[-1]
+			photo_url = '{}/{}'.format(attributesForPrimeMinisters.csv_url(), photo_name)
+			urllib.request.urlretrieve(photo_url, './images')
 
 
 
