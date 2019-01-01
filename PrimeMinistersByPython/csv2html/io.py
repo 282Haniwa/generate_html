@@ -51,9 +51,12 @@ class IO(object):
 
 	def write_csv(self, filename, rows):
 		"""指定されたファイルにCSVとして行たち(rows)を書き出す。"""
-		reader = reat_csv(self, filename)
+		
 		'''
-		for row in reader:
-			print 'row'
+		TODO: (Nobu)こんな感じかな？
 		'''
+		with open('filename', 'wt') as file:
+			csvout = csv.writer(filename)
+			csvout.writerows(rows)
+		
 		return
