@@ -18,5 +18,5 @@ class Reader(IO):
 
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
-		self.read_csv(self.)
+
 		return
