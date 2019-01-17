@@ -19,4 +19,8 @@ class Reader(IO):
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
 
+		csv_rows = self.read_csv(self.attributes().csv_url())
+		for row in csv_rows:
+			self.table().add(Tuple(self.attributes(), row))
+
 		return
