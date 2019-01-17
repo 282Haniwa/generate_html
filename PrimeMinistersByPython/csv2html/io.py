@@ -23,14 +23,10 @@ class IO(object):
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
 		with open(filename, 'r') as data:
-			read = csv.reader(data)
-			return_list = [row for row in read]
-		return return_list
-		"""
-		TODO: Nobu
-		[[---,---,---,...],[---,---,---,...],・・・[---,---,---,...]]
-		この形のリストを想定しています。
-		"""
+			csv_content = csv.reader(data)
+			csv_rows = [row for row in read]
+		return csv_rows
+		
 		
 
 	@classmethod

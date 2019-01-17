@@ -5,10 +5,12 @@ import os
 import shutil
 import urllib
 import .attributes as attributes
+import re
 
 from io import IO
 from reader import Reader
 from table import Table
+from urllib2 import Request
 
 
 class Downloader(IO):
@@ -23,35 +25,17 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
-		self.PrimeMinisterCSV = "{}".format(attributes.AttributesForPrimeMinisters.csv_url())
-		self.TokugawaShogunateCSV = "{}".format(attributes.AttributesForTokugawaShogunate.csv_url())
+		urllib.urlretrieve(self.attributes().csv_url(), self.attributes().csv_filename())
+		reader = Reader(self.table())
+		reader.perform()
 		return
 
 
 	def download_images(self, image_filenames):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
-
-		'''
-		TODO: まだ総理大臣だけしか書いてないけどこれでいけるかな？
-		'''
-
-		if os.path.isdir("./images"):
-			shutil.rmtree("./images")
-		os.makedirs("./images")
-
-		if os.path.isdir("./thumbnails"):
-			shutil.rmtree("./thumbnails")
-		os.makedirs("./thumbnails")
-
 		for image_filename in image_filenames:
-			photo_name = image_filenames[-1]
-			photo_url = '{}/{}'.format(attributesForPrimeMinisters.csv_url(), photo_name)
-			urllib.request.urlretrieve(photo_url, './images')
-
-
-
-		
-
+			photo_url = '{}/{}'.format(attributes.csv_url(), photo_name)
+			urllib.request.urlretrieve(photo_url, image_filename)
 		return
 
 	def perform(self):
