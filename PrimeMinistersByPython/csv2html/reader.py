@@ -18,11 +18,7 @@ class Reader(IO):
 
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
-		import re
-		csv_rows = self.read_csv(self.attributes().csv_filename())
+		csv_rows = self.read_csv(self.attributes().csv_url())
 		for row in csv_rows:
-			values = re.sub('\n$', "", row)
-			values = values.replace("\"", "").split(",")
-			a_tuple = Tuple(self.attributes(), values)
-			self.table().add(a_tuple)
+			self.table().add(Tuple(self.attributes(), row))
 		return
