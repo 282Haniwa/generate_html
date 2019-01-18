@@ -40,12 +40,22 @@ class Table(object):
 	def image_filenames(self):
 		"""画像ファイル群をリストにして応答する。"""
 
-		return None
+		image_filenames = []
+		image_index = self._attributes.keys().index('image')
+		for tuple in self._tuples:
+			image_filenames.append(tuple.values()[image_index])
+
+		return image_filenames
 
 	def thumbnail_filenames(self):
 		"""縮小画像ファイル群をリストにして応答する。"""
 
-		return None
+		thumbnail_filenames = []
+		thumbnail_index = self._attributes.keys().index('thumbnail')
+		for tuple in self._tuples:
+			thumbnail_filenames.append(tuple.values()[thumbnail_index])
+
+		return thumbnail_filenames
 
 	def tuples(self):
 		"""タプル群を応答する。"""
