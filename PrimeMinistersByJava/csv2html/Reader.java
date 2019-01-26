@@ -25,6 +25,26 @@ public class Reader extends IO
 	 */
 	public void perform()
 	{
+		String fileUrl = attributes().csvUrl();
+		String name = fileUrl.substring(fileUrl.lastIndexOf('/') + 1);
+		File textFile = new File(this.attributes().baseDirectory() + name);
+		boolean judge = true;
+		List<String> textCollections = IO.readTextFromFile(textFile);
+		for(String aString : textCollections)
+		{
+			List<String> aRaw = IO.splitString(aString, ",");
+			if(judge)
+			{
+				this.attributes().names(aRaw);
+				judge = false;
+			}
+			else
+			{
+				Tuple aTuple = new Tuple(this.attributes(), aRaw);
+				this.table().add(aTuple);
+			}
+		}
+
 		return;
 	}
 }
