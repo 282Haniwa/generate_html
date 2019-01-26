@@ -53,6 +53,11 @@ class Attributes(object):
 			shutil.rmtree(base_directory)
 		os.makedirs(base_directory)
 
+		#images, thumbnailsディレクトリを作成するために追記
+		directory = (lambda filename: os.makedirs(os.path.join(base_directory, filename)))
+		directory('images')
+		directory('thumbnails')
+		#ここまで
 		the_class.__BASE_DIRECTORY = base_directory
 
 		return the_class.__BASE_DIRECTORY
@@ -113,6 +118,11 @@ class AttributesForPrimeMinisters(Attributes):
 
 		# return the_class.base_url() + 'PrimeMinisters.csv'
 		return the_class.base_url() + 'PrimeMinisters2.csv'
+	
+	@classmethod
+	def csv_filename(the_class):
+		"""CSVファイルの保存名を応答する"""
+		return 'PrimeMinisters.csv'
 
 	@classmethod
 	def title_string(the_class):
@@ -160,6 +170,11 @@ class AttributesForTokugawaShogunate(Attributes):
 
 		# return the_class.base_url() + 'TokugawaShogunate.csv'
 		return the_class.base_url() + 'TokugawaShogunate2.csv'
+
+	@classmethod
+	def csv_filename(the_class):
+		"""CSVファイルの保存名を応答する"""
+		return 'TokugawaShogunate.csv'
 
 	@classmethod
 	def title_string(the_class):

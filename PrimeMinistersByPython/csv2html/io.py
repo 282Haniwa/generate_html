@@ -22,13 +22,19 @@ class IO(object):
 
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
-		with open('./PrimeMinisters.csv', 'r') as csvfile:
-			reader = csv.reader(csvfile, delimiter='', quotechar='|')
-		return reader
-		"""
-		間違えていなければでcsvを読み込めているはず...
-		TODO: Nobu(何か間違いがあればslackで)
-		"""
+		import re
+		with open(filename, 'rb') as data:
+			a_string = data.read()
+			regex_title = r"[一-龠ぁ-んァ-ヴ\,\,]+\n"
+        	regex_main = r"[\d]+[ー〜（）\,\-\"一-龠ぁ-んァ-ヴ\w(\s|　)]+\/[\d]*\.jpg\,[\w]*\/[\d]*\.jpg"
+        	regex_tokugawa = regex_main+r"\,[\"一-龠ぁ-んァ-ヴ\,]*\n"
+        	regex_tokugawa_1 = regex_tokugawa + r"[一-龠ぁ-んァ-ヴ\"\,]*\n"
+        	csv_rows = re.findall("("+regex_tokugawa_1
+                                +"|"+regex_tokugawa+"|"
+                                +regex_main+"|"+regex_title+")"
+                                , a_string)
+		return csv_rows
+		
 		
 
 	@classmethod
@@ -49,12 +55,7 @@ class IO(object):
 
 	def write_csv(self, filename, rows):
 		"""指定されたファイルにCSVとして行たち(rows)を書き出す。"""
-		reader = reat_csv(self, filename)
-		for row in reader:
-			print 'row'
-
-		"""
-		TODO:(Nobu)書き出すって、print...??
-				   
-		"""
+		with open('filename', 'wt') as filename:
+			csvout = csv.writer(filename)
+			csvout.writerows(rows)
 		return
