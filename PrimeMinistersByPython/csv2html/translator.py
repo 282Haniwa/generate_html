@@ -43,7 +43,7 @@ class Translator(object):
 			end_date = datetime.date(int(end[0]), int(end[1]), int(end[2]))
 		else:
 			end_date = datetime.date.today()
-		return str((end_date - start_date).days)
+		return str((end_date - start_date).days + 1)
 
 	def compute_string_of_image(self, tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
