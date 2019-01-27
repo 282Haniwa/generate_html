@@ -95,8 +95,8 @@ class Writer(IO):
 		with open(style_filename, 'r') as a_style_file:
 			lines.extend(a_style_file.readlines())
 		lines.append('</style>\n')
-		# TODO: html_canonical_stringの適応
-		lines.append('<title>{}</title>\n'.format(self.attributes().title_string()))
+		title = self.html_canonical_string(self.attributes().title_string())
+		lines.append('<title>{}</title>\n'.format(title))
 		lines.append('</head>\n')
 		file.writelines(lines)
 
@@ -106,8 +106,8 @@ class Writer(IO):
 		"""ヘッダを書き出す。"""
 
 		file.write('<div class="belt">\n')
-		# TODO: html_canonical_stringの適応
-		file.write('\t<h2>{}</h2>\n'.format(self.attributes().caption_string()))
+		message = self.html_canonical_string(self.attributes().caption_string())
+		file.write('\t<h2>{}</h2>\n'.format(message))
 		file.write('</div>\n')
 
 		return

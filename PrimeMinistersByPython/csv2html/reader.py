@@ -21,5 +21,6 @@ class Reader(IO):
 		csv_rows = self.read_csv(self.attributes().csv_filename())
 		self.table().attributes().set_names(csv_rows[0])
 		for row in csv_rows[1:]:
-			self.table().add(Tuple(self.attributes(), row))
+			html_canonical_row = [self.html_canonical_string(string) for string in row]
+			self.table().add(Tuple(self.attributes(), html_canonical_row))
 		return

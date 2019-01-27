@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import csv
+import html
 
 class IO(object):
 	"""入出力：リーダ・ダウンローダ・ライタを抽象する。"""
@@ -22,6 +23,7 @@ class IO(object):
 
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
+
 		with open(filename, 'rt', encoding='utf-8', newline='') as file:
 			csv_reader = csv.reader(file, delimiter=',', doublequote=False, lineterminator='\n', quotechar='"')
 			rows = []
@@ -32,8 +34,11 @@ class IO(object):
 	@classmethod
 	def html_canonical_string(the_class, a_string):
 		"""指定された文字列をHTML内に記述できる正式な文字列に変換して応答する。"""
-		
-		return None
+
+		result = a_string
+		result = html.escape(result, quote=True)
+		result = result.replace('\n', '<br>')
+		return result
 
 	def table(self):
 		"""テーブルを応答する。"""
