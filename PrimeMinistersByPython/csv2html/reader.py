@@ -3,8 +3,8 @@
 
 import os
 
-from io import IO
-from tuple import Tuple
+from .io import IO
+from .tuple import Tuple
 
 class Reader(IO):
 	"""リーダ：情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。"""
@@ -18,7 +18,7 @@ class Reader(IO):
 
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
-		csv_rows = self.read_csv(self.attributes().csv_url())
+		csv_rows = self.read_csv(self.attributes().csv_filename())
 		for row in csv_rows:
 			self.table().add(Tuple(self.attributes(), row))
 		return

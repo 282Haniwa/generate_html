@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import commands
-#import subprocess
+# import commands
+import subprocess
 import datetime
 import locale
 import os
@@ -14,9 +14,9 @@ from PIL import Image
 
 from .downloader import Downloader
 from .io import IO
-from table import Table
-from tuple import Tuple
-from writer import Writer
+from .table import Table
+from .tuple import Tuple
+from .writer import Writer
 
 class Translator(object):
 	"""トランスレータ：CSVファイルをHTMLページへと変換するプログラム。"""
@@ -65,7 +65,7 @@ class Translator(object):
 		base_directory = class_attributes.base_directory()
 		index_html = class_attributes.index_html()
 		a_command = 'open -a Safari ' + base_directory + os.sep + index_html
-		commands.getoutput(a_command)
+		subprocess.getoutput(a_command)
 
 		return
 

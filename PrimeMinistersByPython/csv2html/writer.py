@@ -5,7 +5,7 @@ import datetime
 import os
 import sys
 
-from io import IO
+from .io import IO
 
 class Writer(IO):
 	"""ライタ：情報のテーブルをHTMLページとして書き出す。"""
@@ -26,7 +26,7 @@ class Writer(IO):
 		index_html = class_attributes.index_html()
 
 		html_filename = os.path.join(base_directory, index_html)
-		with open(html_filename, 'wb') as a_file:
+		with open(html_filename, 'wt') as a_file:
 			a_file.write('<html lang="ja">\n')
 			self.write_head(a_file)
 			a_file.write('<body>\n')

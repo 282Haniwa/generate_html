@@ -3,14 +3,13 @@
 
 import os
 import shutil
-import urllib
-import urllib2
-import attributes
+import urllib.request as urlrequest
 import re
 
-from io import IO
-from reader import Reader
-from table import Table
+from .io import IO
+from .reader import Reader
+from .table import Table
+from .attributes import Attributes
 
 
 class Downloader(IO):
@@ -25,7 +24,7 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
-		urllib.urlretrieve(self.attributes().csv_url(), self.attributes().csv_filename())
+		urlrequest.urlretrieve(self.attributes().csv_url(), self.attributes().csv_filename())
 		return
 
 
@@ -34,15 +33,7 @@ class Downloader(IO):
 		for image_filename in image_filenames:
 			image_url = self.attributes().base_url() + image_filename
 			image_filename = os.path.join(self.attributes().base_directory(), image_filename)
-			site = urllib2.urlopen(image_url)
-			with open(image_filename, "wb") as image_file:
-				image_file.write(site.read())
-			# image_url = '{}/{}'.format(self.attributes().base_url(), image_filename)
-			# image_url = self.attributes().base_url() + image_filename
-			# urllib2.urlretrieve(image_url, './images/aaaa.jpg')
-		# for thumbnail_filename in image_filename:
-		# 	thumbnail_url = '{}/{}'.format(self.attributes().csv_url, thumbnail_filename)
-		# 	utllib.urlretrieve(thumbnail_url, thumbnail_filename)
+			urlrequest.urlretrieve(image_url, image_filename)
 		return
 
 	def perform(self):

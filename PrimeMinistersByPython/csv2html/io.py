@@ -23,10 +23,11 @@ class IO(object):
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
 		with open(filename, 'rt', encoding='utf-8', newline='') as file:
-			csv_rows = csv.reader(file, delimiter=',', doublequote=False, lineterminator='\n', quotechar='"')
-		return csv_rows
-		
-		
+			csv_reader = csv.reader(file, delimiter=',', doublequote=False, lineterminator='\n', quotechar='"')
+			rows = []
+			for row in csv_reader:
+				rows.append(row)
+		return rows
 
 	@classmethod
 	def html_canonical_string(the_class, a_string):
