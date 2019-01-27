@@ -94,9 +94,10 @@ class AttributesForPrimeMinisters(Attributes):
 
 		if kind_string == 'input':
 			self._keys = ["no", "order", "name", "kana", "period", "school", "party", "place", "image", "thumbnail"]
+			self._names = [None] * len(self._keys)
 		if kind_string == 'output':
 			self._keys = ["no", "order", "name", "kana", "period", "days", "school", "party", "place", "image"]
-		self._names = [None] * len(self._keys)
+			self._names = ["人目", "代", "名前", "ふりがな", "在位期間", "在位日数", "出身校", "政党", "出身地", "画像"]
 
 		return
 
@@ -146,9 +147,10 @@ class AttributesForTokugawaShogunate(Attributes):
 
 		if kind_string == 'input':
 			self._keys = ["no", "name", "kana", "period", "family", "rank", "image", "thumbnail", "former", "cemetery"]
+			self._names = [None] * len(self._keys)
 		if kind_string == 'output':
 			self._keys = ["no", "name", "kana", "period", "days", "family", "rank", "image", "former", "cemetery"]
-		self._names = [None] * len(self._keys)
+			self._names = ["番号", "名前", "ふりがな", "在位期間", "在位日数", "出身家", "官位", "画像", "院号", "墓所"]
 
 		return
 
