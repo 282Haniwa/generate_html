@@ -15,6 +15,8 @@ clean:
 	@if [ -e $(INSTDIR) ] ; then echo "rm -f -r $(INSTDIR)" ; rm -f -r $(INSTDIR) ; fi
 	@if [ -e MANIFEST ] ; then echo "rm -f MANIFEST" ; rm -f MANIFEST ; fi
 	@find . -name ".DS_Store" -exec rm {} ";" -exec echo rm -f {} ";"
+	@if [ -e PrimeMinisters* ] ; then echo "rm -rf PrimeMinisters*" ; rm -rf PrimeMinisters* ; fi
+	@if [ -e TokugawaShogunate* ] ; then echo "rm -rf TokugawaShogunate*" ; rm -rf TokugawaShogunate* ; fi
 
 test:
 	$(PYTHON) $(TARGET)
