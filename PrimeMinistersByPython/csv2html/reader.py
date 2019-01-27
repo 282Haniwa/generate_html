@@ -19,6 +19,7 @@ class Reader(IO):
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
 		csv_rows = self.read_csv(self.attributes().csv_filename())
-		for row in csv_rows:
+		self.table().attributes().names(csv_rows[0])
+		for row in csv_rows[1:]:
 			self.table().add(Tuple(self.attributes(), row))
 		return

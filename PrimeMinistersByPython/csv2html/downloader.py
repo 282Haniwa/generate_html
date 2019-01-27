@@ -41,7 +41,7 @@ class Downloader(IO):
 		self.download_csv()
 		reader = Reader(self.table())
 		reader.perform()
-		self.download_images(self.table().image_filenames()[1:])
-		self.download_images(self.table().thumbnail_filenames()[1:])
+		self.download_images(self.table().image_filenames())
+		self.download_images(self.table().thumbnail_filenames())
 
 		return
