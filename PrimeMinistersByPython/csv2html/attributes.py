@@ -78,7 +78,7 @@ class Attributes(object):
 
 		return self._names
 
-	def names(self, names):
+	def set_names(self, names):
 		"""名前群を設定する。"""
 
 		self._names = names
