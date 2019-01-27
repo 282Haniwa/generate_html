@@ -13,10 +13,11 @@ import shutil
 from PIL import Image
 
 from .downloader import Downloader
-from .io import IO
 from .table import Table
 from .tuple import Tuple
 from .writer import Writer
+from .attributes import AttributesForPrimeMinisters
+from .attributes import AttributesForTokugawaShogunate
 
 class Translator(object):
 	"""トランスレータ：CSVファイルをHTMLページへと変換するプログラム。"""
@@ -33,13 +34,30 @@ class Translator(object):
 
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
-		
-		return None
+
+		period_list = re.split('〜', period)
+		start = re.split('[年月日]', period_list[0])
+		end = re.split('[年月日]', period_list[1])
+		start_date = datetime.date(int(start[0]), int(start[1]), int(start[2]))
+		if end[0] != '':
+			end_date = datetime.date(int(end[0]), int(end[1]), int(end[2]))
+		else:
+			end_date = datetime.date.today()
+		return str((end_date - start_date).days)
 
 	def compute_string_of_image(self, tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
 
-		return None
+		no_index = tuple.attributes().keys().index('no')
+		image_index = tuple.attributes().keys().index('image')
+		thumbnail_index = tuple.attributes().keys().index('thumbnail')
+		img_html = '<a name="{no}" href="{image}"><img class="borderless" src="{thumbnail}" width="25" height="32" alt="{alt}"></a>'.format(
+			no = tuple.values()[no_index],
+			image = tuple.values()[image_index],
+			thumbnail = tuple.values()[thumbnail_index],
+			alt = tuple.values()[image_index].split('/')[1],
+		)
+		return img_html
 
 	def execute(self):
 		"""CSVファイルをHTMLページへと変換する。"""
@@ -83,4 +101,18 @@ class Translator(object):
 	def translate(self):
 		"""CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。"""
 
+		for tuple in self._input_table.tuples():
+			values = []
+			for attribute in self._output_table.attributes().keys():
+				if attribute == "image":
+					values.append(self.compute_string_of_image(tuple))
+				elif attribute == "days":
+					period_index_in_tuple = tuple.attributes().keys().index("period")
+					values.append(self.compute_string_of_days(tuple.values()[period_index_in_tuple]))
+				elif attribute in self._input_table.attributes().keys():
+					attribute_index_in_tuple = tuple.attributes().keys().index(attribute)
+					values.append(tuple.values()[attribute_index_in_tuple])
+				else:
+					values.append(None)
+			self._output_table.add(Tuple(self._output_table.attributes(), values))
 		return
