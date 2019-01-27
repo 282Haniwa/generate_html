@@ -41,8 +41,37 @@ class Writer(IO):
 	def write_body(self, file):
 		"""ボディを書き出す。つまり、属性リストを書き出し、タプル群を書き出す。"""
 
-		file.write(self.table().__str__())
-
+		indent = 0
+		with_indent = (lambda string: (indent * '\t') + string)
+		file.write(with_indent('<table class="content" summary="table">\n'))
+		indent += 1
+		file.write(with_indent('<thead>\n'))
+		indent += 1
+		file.write(with_indent('<tr>\n'))
+		indent += 1
+		for name in self.table().attributes().names():
+			file.write(with_indent('<td class="center-pink"><strong>{}</strong></td>\n'.format(name)))
+		indent -= 1
+		file.write(with_indent('</tr>\n'))
+		indent -= 1
+		file.write(with_indent('</thead>\n'))
+		file.write(with_indent('<tbody>\n'))
+		indent += 1
+		for index, tuple in enumerate(self.table().tuples()):
+			file.write(with_indent('<tr>\n'))
+			indent += 1
+			if index % 2 == 0:
+				for value in tuple.values():
+					file.write(with_indent('<td class="center-blue">{}</td>\n'.format(value)))
+			else:
+				for value in tuple.values():
+					file.write(with_indent('<td class="center-yellow">{}</td>\n'.format(value)))
+			indent -= 1
+			file.write(with_indent('</tr>\n'))
+		indent -= 1
+		file.write(with_indent('</tbody>\n'))
+		indent -= 1
+		file.write(with_indent('</table>\n'))
 		return
 
 	def write_footer(self, file):
