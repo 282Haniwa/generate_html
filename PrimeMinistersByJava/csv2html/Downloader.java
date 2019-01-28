@@ -31,7 +31,8 @@ public class Downloader extends IO
 		List<String> textCollections = IO.readTextFromURL(fileUrl);
 		File textFile = new File(this.attributes().baseDirectory() + name);
 		IO.writeText(textCollections,textFile);
-		System.out.println("At : " + fileUrl);
+		System.out.println("at : " + fileUrl);
+		System.out.println("to :" + textFile);
 
 		return;
 	}
