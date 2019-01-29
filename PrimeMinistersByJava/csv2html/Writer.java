@@ -34,11 +34,11 @@ public class Writer extends IO
 		try
 		{
 			Attributes attributes = this.attributes();
-			String fileStringOfHTML = attributes.baseDirectory() + attributes.indexHTML();
-			File aFile = new File(fileStringOfHTML);
-			FileOutputStream outputStream = new FileOutputStream(aFile);
-			OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream, StringUtility.encodingSymbol());
-			BufferedWriter aWriter = new BufferedWriter(outputWriter);
+			String aHTML = attributes.baseDirectory() + attributes.indexHTML();
+			File aFile = new File(aHTML);
+			FileOutputStream outPutStream = new FileOutputStream(aFile);
+			OutputStreamWriter outPutStreamWriter = new OutputStreamWriter(outPutStream, StringUtility.encodingSymbol());
+			BufferedWriter aWriter = new BufferedWriter(outPutStreamWriter);
 
 			this.writeHeaderOn(aWriter);
 			this.writeTableBodyOn(aWriter);

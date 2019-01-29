@@ -108,14 +108,14 @@ public class Translator extends Object
 	*/
 	public String computeStringOfImage(String aString, Tuple aTuple, int no)
 	{
-		int index = aTuple.attributes().indexOfThumbnail();
-		String thumnailString = aTuple.values().get(aTuple.attributes().indexOfThumbnail());
-		String noString = aTuple.values().get(aTuple.attributes().indexOfNo());
-		BufferedImage image = this.inputTable.thumbnails().get(no);
-		List<String> aCollection = IO.splitString(aTuple.values().get(index),"/");
-		index = aCollection.size() - 1;
+	  BufferedImage image = this.inputTable.thumbnails().get(no);
+		List<String> anyStrings = aTuple.values();
+		String index = anyStrings.get(aTuple.attributes().indexOfNo());
+		String imageString = anyStrings.get(aTuple.attributes().indexOfImage());
+		String thumnailString = anyStrings.get(aTuple.attributes().indexOfThumbnail());
 		StringBuilder aBuilder = new StringBuilder();
 		aBuilder.append("<a name=\"");
+		aBuilder.append(thumnailString);
 		aBuilder.append("\"href=\"");
 		aBuilder.append(aString);
 		aBuilder.append("\">");
@@ -126,6 +126,7 @@ public class Translator extends Object
 		aBuilder.append("\" height=\"");
 		aBuilder.append(image.getHeight());
 		aBuilder.append("\" alt=\"");
+		aBuilder.append(index);
 		aBuilder.append("\"></a>");
 
 		return aBuilder.toString();
