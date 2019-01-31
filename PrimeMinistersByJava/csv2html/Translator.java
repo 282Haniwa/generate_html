@@ -57,18 +57,17 @@ public class Translator extends Object
 	*/
 	public String computeNumberOfDays(String periodString)
 	{
-		List<String> aPeriodArray = Arrays.asList(periodString.split("[〜]"));
-		List<String> aStartParams = Arrays.asList(aPeriodArray.get(0).split("[年月日]"));
-		List<String> aEndParams = Arrays.asList(aPeriodArray.get(1).split("[年月日]"));
-		Calendar aStartCalender = Calendar.getInstance();
-		Calendar aEndCalender = Calendar.getInstance();
-		int year, month, day;
+		List<String> aPeriodList = Arrays.asList(periodString.split("[〜]"));
+		List<String> aStartParams = Arrays.asList(aPeriodList.get(0).split("[年月日]"));
 		int startYear = Integer.parseInt(aStartParams.get(0));
 		int startMonth = Integer.parseInt(aStartParams.get(1)) - 1;
 		int startDay = Integer.parseInt(aStartParams.get(2));
+		Calendar aStartCalender = Calendar.getInstance();
+		Calendar aEndCalender = Calendar.getInstance();
 		aStartCalender.set(startYear, startMonth, startDay);
-		if (!aEndParams.isEmpty())
+		if (aPeriodList.size() >= 2)
 		{
+			List<String> aEndParams = Arrays.asList(aPeriodList.get(1).split("[年月日]"));
 			int endYear = Integer.parseInt(aEndParams.get(0));
 			int endMonth = Integer.parseInt(aEndParams.get(1)) - 1;
 			int endDay = Integer.parseInt(aEndParams.get(2));
