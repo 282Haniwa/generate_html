@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -56,45 +57,25 @@ public class Translator extends Object
 	*/
 	public String computeNumberOfDays(String periodString)
 	{
-		String[] anArray = periodString.split("[0-9]:", 0);
-		HashSet<String> aHashSet = new HashSet<String>();
-		boolean judge = true;
-		StringBuilder aBuilder = new StringBuilder();
-		aBuilder.append(":");
-
-		for(String aString : anArray)
+		List<String> aPeriodArray = Arrays.asList(periodString.split("[〜]"));
+		List<String> aStartParams = Arrays.asList(aPeriodArray.get(0).split("[年月日]"));
+		List<String> aEndParams = Arrays.asList(aPeriodArray.get(1).split("[年月日]"));
+		Calendar aStartCalender = Calendar.getInstance();
+		Calendar aEndCalender = Calendar.getInstance();
+		int year, month, day;
+		int startYear = Integer.parseInt(aStartParams.get(0));
+		int startMonth = Integer.parseInt(aStartParams.get(1)) - 1;
+		int startDay = Integer.parseInt(aStartParams.get(2));
+		aStartCalender.set(startYear, startMonth, startDay);
+		if (!aEndParams.isEmpty())
 		{
-			if(!aString.isEmpty()) { aHashSet.add(aString); }
+			int endYear = Integer.parseInt(aEndParams.get(0));
+			int endMonth = Integer.parseInt(aEndParams.get(1)) - 1;
+			int endDay = Integer.parseInt(aEndParams.get(2));
+			aEndCalender.set(endYear, endMonth, endDay);
 		}
-		for(String aString : aHashSet)
-		{
-			if(judge) { judge = false;}
-			else { aBuilder.append("/"); }
-			aBuilder.append(aString);
-		}
-		String performString = aBuilder.toString();
-		anArray = periodString.split(performString,0);
-		List<String> aList = new ArrayList<String>();
-		for(String aString : aList)
-		{
-			if(!aString.isEmpty()) { aList.add(aString); }
-		}
-		Calendar aCalendar = Calendar.getInstance();
-		int calendarYear = Integer.parseInt(aList.get(0));
-		int calendarMonth = Integer.parseInt(aList.get(1))-1;
-		int calendarDay = Integer.parseInt(aList.get(2));
-		aCalendar.set(calendarYear,calendarMonth,calendarDay);
-		long previous = aCalendar.getTime().getTime();
-
-		aCalendar = Calendar.getInstance();
-		if(aList.size() > 3)
-		{
-			calendarYear = Integer.valueOf(aList.get(3));
-			calendarMonth = Integer.valueOf(aList.get(4)) -1;
-			calendarDay = Integer.valueOf(aList.get(5));
-		}
-		long rear = aCalendar.getTime().getTime();
-		long dayTime = ((rear - previous) / (1000*60*60*24)) + 1;
+		long diffTimeOfMilliseconds = aEndCalender.getTimeInMillis() - aStartCalender.getTimeInMillis();
+		long dayTime = (diffTimeOfMilliseconds / (1000*60*60*24)) + 1;
 		String days = String.format("%1$d" ,dayTime);
 		return days;
 	}
