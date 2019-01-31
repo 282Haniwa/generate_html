@@ -1,6 +1,7 @@
 package csv2html;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import utility.StringUtility;
 
@@ -32,7 +33,8 @@ public class Reader extends IO
 		List<String> textCollections = IO.readTextFromFile(textFile);
 		for(String aString : textCollections)
 		{
-			List<String> aRaw = IO.splitString(aString, ",");
+			List<String> aRaw = Arrays.asList(aString.split(","));
+			System.out.println(aRaw);
 			if(judge)
 			{
 				this.attributes().names(aRaw);
