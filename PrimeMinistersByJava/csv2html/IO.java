@@ -64,7 +64,54 @@ public abstract class IO extends Object
 	 */
 	public static String htmlCanonicalString(String aString)
 	{
-		return null;
+		StringBuilder aBuilder = new StringBuilder();
+		for(char escapeString : aString.toCharArray())
+		{
+			switch(escapeString)
+			{
+				case '&' :
+				aBuilder.append("&amp;");
+				break;
+
+				case '\'' :
+				aBuilder.append("&quot;");
+				break;
+
+				case '>' :
+				aBuilder.append("&gt;");
+				break;
+
+				case '<' :
+				aBuilder.append("&lt;");
+				break;
+
+				case ' ' :
+				aBuilder.append("&nbsp;");
+				break;
+
+				case '\t' :
+				aBuilder.append("");
+				break;
+
+				case '\r' :
+				aBuilder.append("");
+				break;
+
+				case '\f' :
+				aBuilder.append("");
+				break;
+
+				case '\n' :
+				aBuilder.append("<br>");
+				break;
+
+				default :
+				aBuilder.append(escapeString);
+				break;
+			}
+		}
+
+		return aBuilder.toString();
 	}
 
 	/**

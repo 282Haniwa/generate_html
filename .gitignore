@@ -2,6 +2,8 @@
 
 *.csv
 
+CSV2HTML_*
+
 Classes/
 *.class
 csv2html.jar
