@@ -180,13 +180,26 @@ public class Translator extends Object
 		{
 			index = 0;
 			List<String> aCollection = new ArrayList<String>();
-			for(String aString : aTuple.values())
+			for(String aAttribute : this.outputTable.attributes().keys())
 			{
-				if(index != indexOfThumbnail)
+				if(index == this.outputTable.attributes().indexOfImage())
 				{
-					if(index == this.inputTable.attributes().indexOfImage()) { aCollection.add(this.computeStringOfImage(aString,aTuple,no)); }
-					else { aCollection.add(IO.htmlCanonicalString(aString)); }
-					if(index == this.inputTable.attributes().indexOfPeriod()) { aCollection.add(this.computeNumberOfDays(aString)); }
+					Integer imageIndexInTuple = aTuple.attributes().indexOfImage();
+					aCollection.add(this.computeStringOfImage(aTuple.values().get(imageIndexInTuple),aTuple,index));
+				}
+				else if(index == this.outputTable.attributes().indexOfDays())
+				{
+					Integer periodIndexInTuple = aTuple.attributes().indexOfPeriod();
+					aCollection.add(this.computeNumberOfDays(aTuple.values().get(periodIndexInTuple)));
+				}
+				else if(this.inputTable.attributes().indexOf(aAttribute) != -1)
+				{
+					Integer attributeIndexInTuple = aTuple.attributes().indexOf(aAttribute);
+					aCollection.add(aTuple.values().get(attributeIndexInTuple));
+				}
+				else
+				{
+					aCollection.add("");
 				}
 				index++;
 			}
