@@ -68,8 +68,7 @@ public class Downloader extends IO
 				aBuilder.append(File.separator);
 				aBuilder.append(separatorCollection.get(number));
 			}
-			urlString = aBuilder.toString() + separatorCollection.get(indexOfLast);
-			File textFile = new File(this.attributes().baseDirectory() + urlString);
+			File textFile = new File(this.attributes().baseDirectory() + pictureString);
 			File aDirectory = new File(textFile.getParent());
 			if(!aDirectory.exists()){ aDirectory.mkdirs(); }
 			ImageUtility.writeImage(loadImage, textFile);

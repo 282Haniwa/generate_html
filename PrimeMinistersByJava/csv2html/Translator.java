@@ -89,7 +89,7 @@ public class Translator extends Object
 	*/
 	public String computeStringOfImage(String aString, Tuple aTuple, int no)
 	{
-	  BufferedImage image = this.inputTable.thumbnails().get(no);
+		BufferedImage image = this.inputTable.thumbnails().get(no);
 		List<String> anyStrings = aTuple.values();
 		String index = anyStrings.get(aTuple.attributes().indexOfNo());
 		String imageString = anyStrings.get(aTuple.attributes().indexOfImage());
@@ -107,7 +107,7 @@ public class Translator extends Object
 		aBuilder.append("\" height=\"");
 		aBuilder.append(image.getHeight());
 		aBuilder.append("\" alt=\"");
-		aBuilder.append(index);
+		aBuilder.append(imageString.split("/")[1]);
 		aBuilder.append("\"></a>");
 
 		return aBuilder.toString();
@@ -165,11 +165,11 @@ public class Translator extends Object
 	{
 		int index = 0;
 		int no = 0;
-		int indexInput = this.inputTable.attributes().indexOfThumbnail();
+		int indexOfThumbnail = this.inputTable.attributes().indexOfThumbnail();
 		List<String> listCollection = new ArrayList<String>();
 		for(String aString : this.inputTable.attributes().names())
 		{
-			if(index != indexInput)
+			if(index != indexOfThumbnail)
 			{
 				listCollection.add(IO.htmlCanonicalString(aString));
 				if(index == this.inputTable.attributes().indexOfPeriod()){ listCollection.add(IO.htmlCanonicalString("在位日数"));	}
@@ -177,14 +177,13 @@ public class Translator extends Object
 			index++;
 		}
 		this.outputTable.attributes().names(listCollection);
-
 		for(Tuple aTuple : this.inputTable.tuples())
 		{
 			index = 0;
 			List<String> aCollection = new ArrayList<String>();
 			for(String aString : aTuple.values())
 			{
-				if(index != indexInput)
+				if(index != indexOfThumbnail)
 				{
 					if(index == this.inputTable.attributes().indexOfImage()) { aCollection.add(this.computeStringOfImage(aString,aTuple,no)); }
 					else { aCollection.add(IO.htmlCanonicalString(aString)); }

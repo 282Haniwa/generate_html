@@ -103,7 +103,7 @@ public class Table extends Object
 	 */
 	private BufferedImage picture(String aString)
 	{
-		return null;
+		return ImageUtility.readImage(aString);
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class Table extends Object
 		for (Tuple aTuple : this.tuples())
 		{
 			String aString = aTuple.values().get(aTuple.attributes().indexOfThumbnail());
-			BufferedImage anImage = this.picture(aString);
+			BufferedImage anImage = this.picture(this.attributes().baseDirectory() + aString);
 			this.thumbnails.add(anImage);
 		}
 
