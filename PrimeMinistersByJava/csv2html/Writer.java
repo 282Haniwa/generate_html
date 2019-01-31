@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Calendar;
 import utility.StringUtility;
 
@@ -15,6 +16,11 @@ import utility.StringUtility;
 */
 public class Writer extends IO
 {
+	/**
+	 * ファイルにhtmlを書き込む際のインデントの大きさ
+	 */
+	private static Integer indent = 0;
+
 	/**
 	* ライタのコンストラクタ。
 	* @param aTable テーブル
@@ -34,15 +40,20 @@ public class Writer extends IO
 		try
 		{
 			Attributes attributes = this.attributes();
-			String aHTML = attributes.baseDirectory() + attributes.indexHTML();
-			File aFile = new File(aHTML);
-			FileOutputStream outPutStream = new FileOutputStream(aFile);
-			OutputStreamWriter outPutStreamWriter = new OutputStreamWriter(outPutStream, StringUtility.encodingSymbol());
-			BufferedWriter aWriter = new BufferedWriter(outPutStreamWriter);
+			String fileStringOfHTML = attributes.baseDirectory() + attributes.indexHTML();
+			File aFile = new File(fileStringOfHTML);
+			FileOutputStream outputStream = new FileOutputStream(aFile);
+			OutputStreamWriter outputWriter = new OutputStreamWriter(outputStream, StringUtility.encodingSymbol());
+			BufferedWriter aWriter = new BufferedWriter(outputWriter);
 
+			aWriter.write("<html lang=\"ja\">\n");
+			this.writeHeadOn(aWriter);
+			aWriter.write("<body>\n");
 			this.writeHeaderOn(aWriter);
 			this.writeTableBodyOn(aWriter);
 			this.writeFooterOn(aWriter);
+			aWriter.write("</body>\n");
+			aWriter.write("</html>\n");
 
 			aWriter.close();
 		}
@@ -60,15 +71,17 @@ public class Writer extends IO
 	{
 		try
 		{
-			aWriter.write("<tr>\n");
+			aWriter.write(Writer.withIndent("<tr>\n"));
+			Writer.indent++;
 
 			for(String writeString : this.attributes().names())
 			{
-				aWriter.write("<td class = \"center-pink\"><strong>");
+				aWriter.write(Writer.withIndent("<td class=\"center-pink\"><strong>"));
 				aWriter.write(writeString);
 				aWriter.write("</strong></td>\n");
 			}
-			aWriter.write("</tr>\n");
+			Writer.indent--;
+			aWriter.write(Writer.withIndent("</tr>\n"));
 		}
 		catch(IOException anException) { anException.printStackTrace(); }
 		return;
@@ -106,21 +119,57 @@ public class Writer extends IO
 		String aString = aBuilder.toString();
 		try
 		{
-			aWriter.write("\t\t\t\t\t<tbody>\n\t\t\t\t</table>\n\t\t\t</td>\n\t\t</tr>\n\t\t</tr>\n\t</tbody>\n</table>\n<hr>\n<div class=\"right-small\">Created by " + aString + "</div>\n</body>\n</html>\n");
+			aWriter.write("<hr>\n<div class=\"right-small\">Created by " + aString + "</div>\n");
 		}
 		catch(IOException anException) { anException.printStackTrace(); }
 		return;
 	}
 
 	/**
-	* ヘッダを書き出す。
+	* htmlヘッダを書き出す。
+	* @param aWriter ライタ
+	*/
+	public void writeHeadOn(BufferedWriter aWriter)
+	{
+		try
+		{
+			List<String> cssRows = IO.readTextFromFile("assets/style.css");
+			aWriter.write("<head>\n");
+			aWriter.write("<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
+			aWriter.write("<meta name=\"author\" content=\"Hukurou 9th\">\n");
+			aWriter.write("<style type=\"text/css\">\n");
+			cssRows.forEach((row) -> {
+				try
+				{
+					aWriter.write(row);
+					aWriter.newLine();
+				}
+				catch (IOException anException) { anException.printStackTrace(); }
+			});
+			aWriter.write("</style>\n");
+			aWriter.write("<title>");
+			aWriter.write(IO.htmlCanonicalString(this.attributes().titleString()));
+			aWriter.write("</title>\n");
+			aWriter.write("</head>\n");
+		}
+		catch (IOException anException) { anException.printStackTrace(); }
+
+		return;
+	}
+
+	/**
+	* htmlヘッダを書き出す。
 	* @param aWriter ライタ
 	*/
 	public void writeHeaderOn(BufferedWriter aWriter)
 	{
 		try
 		{
-			aWriter.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n<html lang=\"ja\">\n<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n<meta http-equiv=\"Content-Style-Type\" content=\"text/css\">\n<meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\">\n<meta name=\"keywords\" content=\"Smalltalk,Oriented,Programming\">\n<meta name=\"description\" content=\"Prime Ministers\">");
+			aWriter.write("<div class=\"belt\">\n");
+			aWriter.write("\t<h2>");
+			aWriter.write(this.attributes().captionString());
+			aWriter.write("</h2>\n");
+			aWriter.write("</div>\n");
 		}
 		catch (IOException anException) { anException.printStackTrace(); }
 
@@ -133,8 +182,24 @@ public class Writer extends IO
 	*/
 	public void writeTableBodyOn(BufferedWriter aWriter)
 	{
-		this.writeAttributesOn(aWriter);
-		this.writeTuplesOn(aWriter);
+		try
+		{
+			aWriter.write(Writer.withIndent("<table class\"content\" summary=\"table\">\n"));
+			Writer.indent++;
+			aWriter.write(Writer.withIndent("<thead>\n"));
+			Writer.indent++;
+			this.writeAttributesOn(aWriter);
+			Writer.indent--;
+			aWriter.write(Writer.withIndent("</thead>\n"));
+			aWriter.write(Writer.withIndent("<tbody>\n"));
+			Writer.indent++;
+			this.writeTuplesOn(aWriter);
+			Writer.indent--;
+			aWriter.write(Writer.withIndent("</tbody>\n"));
+			Writer.indent--;
+			aWriter.write(Writer.withIndent("</table>\n"));
+		}
+		catch (IOException anException) { anException.printStackTrace(); }
 
 		return;
 	}
@@ -150,21 +215,34 @@ public class Writer extends IO
 		{
 			for(Tuple aTuple : this.tuples())
 			{
-				aWriter.write("<tr>\n");
+				aWriter.write(Writer.withIndent("<tr>\n"));
+				Writer.indent++;
 
 				for(String aString : aTuple.values() )
 				{
-					if( number % 2 == 0) {aWriter.write("<td class=\"center-blue\">"); }
-					else { aWriter.write("<td class=\"center-yellow\">"); }
+					if( number % 2 == 0) {aWriter.write(Writer.withIndent("<td class=\"center-blue\">")); }
+					else { aWriter.write(Writer.withIndent("<td class=\"center-yellow\">")); }
 					aWriter.write(aString);
-					aWriter.write("</td>\n");
+					aWriter.write(Writer.withIndent("</td>\n"));
 				}
-				aWriter.write("</tr>\n");
+				Writer.indent--;
+				aWriter.write(Writer.withIndent("</tr>\n"));
 				number++;
 			}
 		}
 		catch (IOException anException) { anException.printStackTrace(); }
 
 		return;
+	}
+
+	public static String withIndent(String aString) {
+		StringBuilder aBuilder = new StringBuilder();
+		for (Integer index = 0; index < Writer.indent; index++)
+		{
+			aBuilder.append("\t");
+		}
+		aBuilder.append(aString);
+
+		return aBuilder.toString(); 
 	}
 }
